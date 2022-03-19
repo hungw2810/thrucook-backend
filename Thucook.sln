@@ -1,0 +1,60 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A354AD32-C0EF-4F0A-8AED-C0CEF84008C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{E7E56EDA-78AA-4C3D-AF4B-534792D90668}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.EntityFramework", "Thucook.EntityFramework\Thucook.EntityFramework.csproj", "{B1A8130A-2DA8-434B-A2F7-9C1AA3C3BF9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Main.API", "Services\Main\Thucook.Main.API\Thucook.Main.API.csproj", "{4AF66106-F17C-471F-A452-67542489BBC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Main.ApiAction", "Services\Main\Thucook.Main.ApiAction\Thucook.Main.ApiAction.csproj", "{F5B1C70D-65D1-446E-9831-EDBEF0AC9FED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Main.ApiModel", "Services\Main\Thucook.Main.ApiModel\Thucook.Main.ApiModel.csproj", "{AFF19B98-B861-4B16-BDCC-16B337FAD255}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Main.ApiService", "Services\Main\Thucook.Main.ApiService\Thucook.Main.ApiService.csproj", "{78F8C024-7F78-4F83-BD98-4B1AE5E15E46}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Commons", "Thucook.Commons\Thucook.Commons.csproj", "{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1A8130A-2DA8-434B-A2F7-9C1AA3C3BF9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A8130A-2DA8-434B-A2F7-9C1AA3C3BF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A8130A-2DA8-434B-A2F7-9C1AA3C3BF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AF66106-F17C-471F-A452-67542489BBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF66106-F17C-471F-A452-67542489BBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF66106-F17C-471F-A452-67542489BBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF66106-F17C-471F-A452-67542489BBC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5B1C70D-65D1-446E-9831-EDBEF0AC9FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5B1C70D-65D1-446E-9831-EDBEF0AC9FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5B1C70D-65D1-446E-9831-EDBEF0AC9FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFF19B98-B861-4B16-BDCC-16B337FAD255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFF19B98-B861-4B16-BDCC-16B337FAD255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFF19B98-B861-4B16-BDCC-16B337FAD255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78F8C024-7F78-4F83-BD98-4B1AE5E15E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78F8C024-7F78-4F83-BD98-4B1AE5E15E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78F8C024-7F78-4F83-BD98-4B1AE5E15E46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E7E56EDA-78AA-4C3D-AF4B-534792D90668} = {A354AD32-C0EF-4F0A-8AED-C0CEF84008C7}
+		{4AF66106-F17C-471F-A452-67542489BBC5} = {E7E56EDA-78AA-4C3D-AF4B-534792D90668}
+		{F5B1C70D-65D1-446E-9831-EDBEF0AC9FED} = {E7E56EDA-78AA-4C3D-AF4B-534792D90668}
+		{AFF19B98-B861-4B16-BDCC-16B337FAD255} = {E7E56EDA-78AA-4C3D-AF4B-534792D90668}
+		{78F8C024-7F78-4F83-BD98-4B1AE5E15E46} = {E7E56EDA-78AA-4C3D-AF4B-534792D90668}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {024898B1-6DB1-4AD8-9BD9-BF3096A7E0F1}
+	EndGlobalSection
+EndGlobal

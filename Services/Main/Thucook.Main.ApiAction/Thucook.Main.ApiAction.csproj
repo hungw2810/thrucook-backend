@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ical.Net" Version="4.2.0" />
+    <PackageReference Include="IdentityModel" Version="5.1.0" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Sodium.Core" Version="1.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Thucook.Commons\Thucook.Commons.csproj" />
+    <ProjectReference Include="..\Thucook.Main.ApiModel\Thucook.Main.ApiModel.csproj" />
+    <ProjectReference Include="..\Thucook.Main.ApiService\Thucook.Main.ApiService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="UserGroupActions\" />
+    <None Remove="RoleActions\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Implements\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implements\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Thucook.Commons\Thucook.Commons.csproj" />
+    <ProjectReference Include="..\..\..\Thucook.EntityFramework\Thucook.EntityFramework.csproj" />
+  </ItemGroup>
+</Project>
