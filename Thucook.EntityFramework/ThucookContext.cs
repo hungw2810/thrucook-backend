@@ -19,6 +19,7 @@ namespace Thucook.EntityFramework
 
         public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<AppointmentStatusId> AppointmentStatusIds { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public virtual DbSet<DoctorSetting> DoctorSettings { get; set; }
@@ -40,6 +41,7 @@ namespace Thucook.EntityFramework
         public virtual DbSet<Speciality> Specialities { get; set; }
         public virtual DbSet<Symtom> Symtoms { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserInformation> UserInformations { get; set; }
         public virtual DbSet<UserStatus> UserStatuses { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
 
@@ -94,7 +96,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -119,7 +121,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -170,6 +172,20 @@ namespace Thucook.EntityFramework
                     .HasColumnName("appointment_status_name");
             });
 
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.ToTable("cities");
+
+                entity.Property(e => e.CityId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("city_id");
+
+                entity.Property(e => e.CityName)
+                    .IsRequired()
+                    .HasMaxLength(128)
+                    .HasColumnName("city_name");
+            });
+
             modelBuilder.Entity<Doctor>(entity =>
             {
                 entity.ToTable("doctors");
@@ -183,7 +199,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -222,7 +238,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -258,7 +274,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -289,7 +305,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -321,7 +337,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -342,7 +358,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -374,9 +390,11 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
+
+                entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
 
                 entity.Property(e => e.IsEnabled)
                     .HasColumnName("is_enabled")
@@ -389,7 +407,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -425,7 +443,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -451,7 +469,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -479,6 +497,8 @@ namespace Thucook.EntityFramework
             {
                 entity.ToTable("locations");
 
+                entity.HasIndex(e => e.CityId, "locations_ibfk_1_idx");
+
                 entity.Property(e => e.LocationId).HasColumnName("location_id");
 
                 entity.Property(e => e.Address)
@@ -491,7 +511,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -525,9 +545,15 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.Locations)
+                    .HasForeignKey(d => d.CityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("locations_ibfk_1");
             });
 
             modelBuilder.Entity<LocationPatient>(entity =>
@@ -556,7 +582,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -601,7 +627,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -630,7 +656,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -647,7 +673,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -693,7 +719,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -738,7 +764,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -850,7 +876,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -884,7 +910,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -930,7 +956,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -951,7 +977,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -992,10 +1018,10 @@ namespace Thucook.EntityFramework
                     .HasColumnName("is_avaiable")
                     .HasDefaultValueSql("'1'");
 
-                entity.Property(e => e.SignupCodeVale)
+                entity.Property(e => e.SignupCodeValue)
                     .IsRequired()
                     .HasMaxLength(8)
-                    .HasColumnName("signup_code_vale");
+                    .HasColumnName("signup_code_value");
             });
 
             modelBuilder.Entity<Speciality>(entity =>
@@ -1009,7 +1035,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -1035,7 +1061,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -1064,7 +1090,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
 
@@ -1088,7 +1114,7 @@ namespace Thucook.EntityFramework
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updated_at")
-                    .HasDefaultValueSql("now()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                 entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
 
@@ -1158,6 +1184,56 @@ namespace Thucook.EntityFramework
                     .HasForeignKey(d => d.UserTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("users_ibfk_1");
+            });
+
+            modelBuilder.Entity<UserInformation>(entity =>
+            {
+                entity.HasKey(e => e.UserId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("user_informations");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(256)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.Birthday)
+                    .HasColumnType("datetime")
+                    .HasColumnName("birthday");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedByUserId).HasColumnName("created_by_user_id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(128)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(128)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.Gender).HasColumnName("gender");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(128)
+                    .HasColumnName("last_name");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(128)
+                    .HasColumnName("phone_number");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updated_at")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.UpdatedByUserId).HasColumnName("updated_by_user_id");
             });
 
             modelBuilder.Entity<UserStatus>(entity =>

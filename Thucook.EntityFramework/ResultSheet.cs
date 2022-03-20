@@ -13,9 +13,9 @@ namespace Thucook.EntityFramework
         public string Symtom { get; set; }
         public string Result { get; set; }
         public DateTime? ReExaminationDate { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public Guid? CreatedByUserId { get; set; }
-        public DateTime? UpdatedAt { get; set; }
         public Guid? UpdatedByUserId { get; set; }
 
         public virtual Appointment Appointment { get; set; }

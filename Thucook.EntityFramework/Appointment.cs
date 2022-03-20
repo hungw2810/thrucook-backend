@@ -26,9 +26,9 @@ namespace Thucook.EntityFramework
         public short AppointmentStatusId { get; set; }
         public string Symtom { get; set; }
         public string CancelReason { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public Guid? CreatedByUserId { get; set; }
-        public DateTime? UpdatedAt { get; set; }
         public Guid? UpdatedByUserId { get; set; }
 
         public virtual Doctor Doctor { get; set; }

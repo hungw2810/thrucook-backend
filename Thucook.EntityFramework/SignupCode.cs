@@ -8,7 +8,7 @@ namespace Thucook.EntityFramework
     public partial class SignupCode
     {
         public int SignupCodeId { get; set; }
-        public string SignupCodeVale { get; set; }
+        public string SignupCodeValue { get; set; }
         public bool? IsAvaiable { get; set; }
     }
 }

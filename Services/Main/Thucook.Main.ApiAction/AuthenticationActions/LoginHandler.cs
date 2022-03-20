@@ -7,7 +7,7 @@ using Thucook.Main.ApiAction;
 using Thucook.Main.ApiModel;
 using Thucook.Main.ApiModel.ApiInputModels;
 
-namespace DrClThucookoud.Main.ApiAction.AuthenticationActions
+namespace Thucook.Main.ApiAction.AuthenticationActions
 {
     public class LoginHandler : IRequestHandler<ApiActionAnonymousRequest<AuthLoginInputModel>, IApiResponse>
     {

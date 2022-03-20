@@ -1,8 +1,7 @@
-﻿namespace DrCloud.Commons.Enums
+﻿namespace Thucook.Commons.Enums
 {
     public enum CityEnum
     {
-        Hanoi = 24,
-        NgheAn = 40
+        Hanoi = 29
     }
 }

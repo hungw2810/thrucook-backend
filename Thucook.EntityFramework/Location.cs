@@ -31,10 +31,11 @@ namespace Thucook.EntityFramework
         public bool? IsEnabled { get; set; }
         public bool? IsDeleted { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public Guid? CreatedByUserId { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public Guid? CreatedByUserId { get; set; }
         public Guid? UpdatedByUserId { get; set; }
 
+        public virtual City City { get; set; }
         public virtual ICollection<Appointment> Appointments { get; set; }
         public virtual ICollection<DoctorSchedule> DoctorSchedules { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }

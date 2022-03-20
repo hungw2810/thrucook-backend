@@ -7,8 +7,10 @@
   <ItemGroup>
     <None Remove="Implements\" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="Implements\" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.16.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Thucook.Commons\Thucook.Commons.csproj" />

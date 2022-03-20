@@ -1,10 +1,6 @@
-using Thucook.Commons;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using NewRelic.LogEnrichers.Serilog;
-using Serilog;
-using System;
-using System.IO;
 
 namespace Thucook.Main.API
 {
@@ -17,6 +13,10 @@ namespace Thucook.Main.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(app =>
+                {
+                    app.AddJsonFile("appsettings.json");
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

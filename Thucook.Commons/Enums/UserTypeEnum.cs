@@ -2,9 +2,8 @@
 {
     public enum UserTypeEnum
     {
-        SuperAdmin = 0,
-        Patient = 1,
-        Clinic = 2,
-        Moderator = 3,
+        SuperAdmin = 1,
+        Patient = 2,
+        Location = 3
     }
 }

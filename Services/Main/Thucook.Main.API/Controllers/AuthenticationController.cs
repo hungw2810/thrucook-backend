@@ -32,5 +32,17 @@ namespace Thucook.Main.API.Controllers
         {
             return await _mediator.Send(ApiActionModel.CreateRequest(input));
         }
+
+        /// <summary>
+        /// Register location
+        /// </summary>
+        /// 
+        [HttpPost]
+        [Route("register-location")]
+        [ProducesResponseType(typeof(ApiResponseModel<UserLoginResponseModel>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> RegisterLocation([FromBody] AuthRegisterLocationInputModel input)
+        {
+            return await _mediator.Send(ApiActionModel.CreateRequest(input));
+        }
     }
 }

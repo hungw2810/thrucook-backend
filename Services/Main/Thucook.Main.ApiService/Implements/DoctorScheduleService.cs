@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thucook.Main.ApiService;
 
-namespace DrCloud.Main.ApiService.Implements
+namespace ThuCook.Main.ApiService.Implements
 {
     public class DoctorScheduleService : IDoctorScheduleService
     {

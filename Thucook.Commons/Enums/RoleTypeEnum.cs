@@ -2,8 +2,8 @@
 {
     public enum RoleTypeEnum
     {
-        Owner = 10,
-        Admin = 20,
-        UserDefined = 30,
+        Owner = 1,
+        Receptionist = 2,
+        Doctor = 3,
     }
 }

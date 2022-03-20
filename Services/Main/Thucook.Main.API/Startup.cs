@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Serilog;
 using System;
 using System.Linq;
+using System.Text;
 using Thucook.Commons.CustomJsonConverter;
 using Thucook.EntityFramework;
 using Thucook.Main.API.Filters;
 using Thucook.Main.API.Middlewares;
+using Thucook.Main.ApiService;
+using Thucook.Main.ApiService.Implements;
+using ThuCook.Main.ApiService.Implements;
 
 namespace Thucook.Main.API
 {
@@ -36,7 +42,10 @@ namespace Thucook.Main.API
         public void ConfigureServices(IServiceCollection services)
         {
             //services.Configure<AppSetting>(Configuration);
-
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
             services
                 .Configure<RouteOptions>(options =>
                 {
@@ -63,6 +72,21 @@ namespace Thucook.Main.API
                     options.SerializerSettings.Converters.Add(new CustomGuidConverter());
                 });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        ValidAudience = configuration["JwtAudience:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecurityKey"])),
+                    };
+                });
+
             services
                 .AddCors(options =>
                 {
@@ -71,8 +95,7 @@ namespace Thucook.Main.API
                         builder
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            ;
+                            .AllowAnyHeader();
                     });
                 })
                 .AddResponseCompression();
@@ -93,14 +116,16 @@ namespace Thucook.Main.API
                 {
                     options
                         .UseMySql(
-                            "server=localhost;port=3306;database=thru_cook;uid=root;password=Hung2001@;",
-                            ServerVersion.AutoDetect("server=localhost;port=3306;database=thru_cook;uid=root;password=Hung2001@;")
+                            configuration.GetConnectionString("DefaultConnection"),
+                            ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))
                         )
                         .EnableDetailedErrors();
                 },
                 ServiceLifetime.Scoped);
-
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies().First(t => t.GetName().Name == "Thucook.Main.ApiAction"));
+            services
+                .AddScoped<IDoctorScheduleService, DoctorScheduleService>()
+                .AddScoped<IJwtService, JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
