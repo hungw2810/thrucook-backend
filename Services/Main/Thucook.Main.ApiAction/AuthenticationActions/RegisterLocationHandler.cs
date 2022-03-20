@@ -109,7 +109,7 @@ namespace Thucook.Main.ApiAction.AuthenticationActions
             };
             _dbContext.Employees.Add(employee);
 
-            //await _dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             var accessToken = _jwtService.GenerateJwt(user);
 

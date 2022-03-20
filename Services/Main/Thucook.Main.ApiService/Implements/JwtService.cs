@@ -21,7 +21,6 @@ namespace Thucook.Main.ApiService.Implements
         public string GenerateJwt(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:SecurityKey"]));
-            //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyODEwMjAwMSIsIm5hbWUiOiJOZ3V5ZW4gTmdvYyBIdW5nIiwiaWF0IjoxNjQ3NzY5MDExfQ.M5GSE_28BDQ9nQNMdGwAlpUQTGX2iaDDCDCQCLmzeLo");
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
@@ -34,12 +33,6 @@ namespace Thucook.Main.ApiService.Implements
               claims,
               expires: DateTime.Now.AddDays(1),
               signingCredentials: credentials);
-
-            //var token = new JwtSecurityToken("https://localhost:6001",
-            //  "https://localhost:6001",
-            //  claims,
-            //  expires: DateTime.Now.AddDays(1),
-            //  signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
