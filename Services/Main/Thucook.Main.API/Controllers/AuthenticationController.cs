@@ -36,9 +36,11 @@ namespace Thucook.Main.API.Controllers
         /// <summary>
         /// Register location
         /// </summary>
-        /// 
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register-location")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(ApiResponseModel<UserLoginResponseModel>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> RegisterLocation([FromBody] AuthRegisterLocationInputModel input)
         {

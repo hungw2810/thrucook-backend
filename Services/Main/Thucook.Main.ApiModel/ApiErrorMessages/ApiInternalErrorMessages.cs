@@ -37,6 +37,12 @@
             Code = "PINT_5001",
             Value = "Invalid Signup Code"
         };
+
+        public static ApiErrorMessage InvalidUserNameOrPassword => new ApiErrorMessage
+        {
+            Code = "PINT_5002",
+            Value = "Invalid User Name Or Password"
+        };
         #endregion
     }
 }

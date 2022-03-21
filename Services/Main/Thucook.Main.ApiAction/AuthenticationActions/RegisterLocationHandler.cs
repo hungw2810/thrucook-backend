@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Thucook.Commons.Enums;
+using Thucook.Commons.Utils;
 using Thucook.EntityFramework;
 using Thucook.Main.ApiModel;
 using Thucook.Main.ApiModel.ApiErrorMessages;
@@ -78,7 +79,7 @@ namespace Thucook.Main.ApiAction.AuthenticationActions
             {
                 UserId = userId,
                 UserName = request.Input.Email,
-                PasswordHashed = PasswordHash.ScryptHashString(request.Input.Password),
+                PasswordHashed = StringHelper.HashString(request.Input.Password),
                 UserTypeId = (int)UserTypeEnum.Location,
                 UserStatusId = (int)UserStatusEnum.Normal,
                 CreatedAt = DateTime.Now,

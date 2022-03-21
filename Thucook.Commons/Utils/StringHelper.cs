@@ -1,6 +1,7 @@
 ﻿using Sodium;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Thucook.Commons.Utils
@@ -30,6 +31,20 @@ namespace Thucook.Commons.Utils
             var cipherText = Convert.FromBase64String(cipherTextBase64);
             var data = SecretBox.Open(cipherText, nonce, key);
             return Encoding.UTF8.GetString(data);
+        }
+
+        public static string HashString(string password)
+        {
+            MD5 mh = MD5.Create();
+            byte[] hash = mh.ComputeHash(Encoding.ASCII.GetBytes(password));
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+
+            return sb.ToString();
         }
     }
 }

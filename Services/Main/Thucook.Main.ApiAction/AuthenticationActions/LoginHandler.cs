@@ -1,77 +1,60 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Sodium;
 using System;
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Thucook.Commons.Enums;
+using Thucook.Commons.Utils;
 using Thucook.EntityFramework;
-using Thucook.Main.ApiAction;
 using Thucook.Main.ApiModel;
+using Thucook.Main.ApiModel.ApiErrorMessages;
 using Thucook.Main.ApiModel.ApiInputModels;
+using Thucook.Main.ApiModel.ApiReponseModels;
+using Thucook.Main.ApiService;
 
 namespace Thucook.Main.ApiAction.AuthenticationActions
 {
     public class LoginHandler : IRequestHandler<ApiActionAnonymousRequest<AuthLoginInputModel>, IApiResponse>
     {
         private readonly ThucookContext _dbContext;
+        private readonly IJwtService _jwtService;
 
-        public LoginHandler(ThucookContext dbContext)
+        public LoginHandler(ThucookContext dbContext, IJwtService jwtService)
         {
             _dbContext = dbContext;
+            _jwtService = jwtService;
         }
 
         public async Task<IApiResponse> Handle(ApiActionAnonymousRequest<AuthLoginInputModel> request, CancellationToken cancellationToken)
         {
-            //    var token = await _tokenClient.RequestPasswordTokenAsync(request.Input.UserName, request.Input.Password, "main.read_write offline_access");
-            //    if (token.IsError)
-            //    {
-            //        if (token.ErrorDescription == OAuthConstants.ErrorMessage.CannotFindUser || token.ErrorDescription == OAuthConstants.ErrorMessage.PasswordIncorrect)
-            //        {
-            //            return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.InvalidUsernameOrPassword);
-            //        }
-            //        return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.LoginFailed);
-            //    }
-            //    if (!token.Json.TryGetProperty("userId", out var userIdValue))
-            //    {
-            //        return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.LoginFailed);
-            //    }
-            //    if (string.IsNullOrEmpty(userIdValue.ToString()))
-            //    {
-            //        return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.LoginFailed);
-            //    }
-
-            //    var user = await (from u in _dbContext.Users
-            //                      where
-            //                      u.UserId == Guid.Parse(userIdValue.ToString())
-            //                      select u).FirstOrDefaultAsync(cancellationToken);
-            //    if (user == null)
-            //    {
-            //        return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.LoginFailed);
-            //    }
-            //    if (user.StatusId == (int)UserStatusEnum.WaitForVerify)
-            //    {
-            //        return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.UserNotVerified);
-            //    }
-
-            //    return ApiResponse.CreateModel(new UserLoginResponseModel()
-            //    {
-            //        Token = new UserTokenResponseModel
-            //        {
-            //            AccessToken = token.AccessToken,
-            //            ExpiresIn = token.ExpiresIn,
-            //            RefreshToken = token.RefreshToken,
-            //            TokenType = token.TokenType
-            //        },
-            //        User = new UserResponseModel
-            //        {
-            //            UserId = user.UserId,
-            //            UserName = user.UserName,
-            //            StatusId = user.StatusId,
-            //            CreatedAtUnix = user.CreatedAtUtc.ToUnixTime(),
-            //            UpdatedAtUnix = user.UpdatedAtUtc.ToUnixTime()
-            //        }
-            //    });
-      
-            Console.WriteLine("yei");
-            throw new NotImplementedException();
+            var passwordHash = StringHelper.HashString(request.Input.Password);
+            var user = await (from u in _dbContext.Users
+                              where
+                              u.UserName == request.Input.UserName &&
+                              u.PasswordHashed == passwordHash &&
+                              u.IsDeleted == false
+                              select u).FirstOrDefaultAsync(cancellationToken);
+            if (user == null)
+            {
+                return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.InvalidUserNameOrPassword);
+            }
+            return ApiResponse.CreateModel(new UserLoginResponseModel
+            {
+                AccessToken = new AccessTokenModel
+                {
+                    Token = _jwtService.GenerateJwt(user),
+                    ExpireTime = DateTime.Now.AddDays(1)
+                },
+                User = new UserResponseModel
+                {
+                    UserId = user.UserId,
+                    UserName = user.UserName,
+                    StatusId = (UserStatusEnum)user.UserStatusId
+                }
+            });
         }
     }
 }
