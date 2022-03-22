@@ -18,14 +18,14 @@ namespace Thucook.Main.ApiService.Implements
             _config = config;
         }
 
-        public string GenerateJwt(User userInfo)
+        public string GenerateJwt(User user, Location location)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:SecurityKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Name, userInfo.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sid, location.LocationId.ToString())
             };
 
             var token = new JwtSecurityToken(_config["JwtSettings:Issuer"],

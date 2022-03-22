@@ -6,6 +6,6 @@ namespace Thucook.Main.ApiService
 {
     public interface IJwtService
     {
-        string GenerateJwt(User userInfo);
+        string GenerateJwt(User user, Location location);
     }
 }

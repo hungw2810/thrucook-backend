@@ -18,6 +18,8 @@ using System;
 using System.Linq;
 using System.Text;
 using Thucook.Commons.CustomJsonConverter;
+using Thucook.Core;
+using Thucook.Core.Implements;
 using Thucook.EntityFramework;
 using Thucook.Main.API.Filters;
 using Thucook.Main.API.Middlewares;
@@ -77,14 +79,16 @@ namespace Thucook.Main.API
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
+                        ValidateIssuer = false,
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["JwtSettings:Issuer"],
                         ValidAudience = configuration["JwtAudience:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:SecurityKey"])),
+                        ClockSkew = TimeSpan.FromDays(1)
                     };
+                    options.MapInboundClaims = false;
                 });
 
             services
@@ -125,7 +129,8 @@ namespace Thucook.Main.API
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies().First(t => t.GetName().Name == "Thucook.Main.ApiAction"));
             services
                 .AddScoped<IDoctorScheduleService, DoctorScheduleService>()
-                .AddScoped<IJwtService, JwtService>();
+                .AddScoped<IJwtService, JwtService>()
+                .AddScoped<ICurrentContext, CurrentContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

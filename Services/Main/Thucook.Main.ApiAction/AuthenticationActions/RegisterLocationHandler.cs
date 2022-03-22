@@ -112,13 +112,11 @@ namespace Thucook.Main.ApiAction.AuthenticationActions
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            var accessToken = _jwtService.GenerateJwt(user);
-
             return ApiResponse.CreateModel(new UserLoginResponseModel
             {
                 AccessToken = new AccessTokenModel
                 {
-                    Token = accessToken,
+                    Token = _jwtService.GenerateJwt(user, location),
                     ExpireTime = DateTime.Now.AddDays(1)
                 },
                 User = new UserResponseModel
