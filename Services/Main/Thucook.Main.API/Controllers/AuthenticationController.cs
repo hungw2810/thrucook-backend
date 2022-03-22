@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
+using Thucook.Core;
 using Thucook.Main.ApiAction;
 using Thucook.Main.ApiModel;
 using Thucook.Main.ApiModel.ApiInputModels;
@@ -15,8 +16,9 @@ namespace Thucook.Main.API.Controllers
     [ApiController]
     public class AuthenticationController : BaseController
     {
-        public AuthenticationController(IMediator mediator
-        ) : base(mediator)
+        public AuthenticationController(IMediator mediator,
+            ICurrentContext currentContext
+        ) : base(mediator, currentContext)
         {
         }
         /// <summary>

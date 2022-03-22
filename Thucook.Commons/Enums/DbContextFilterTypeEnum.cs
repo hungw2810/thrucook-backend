@@ -4,8 +4,7 @@
     {
         None = 0,
         IsDeleted = 1,
-        ClinicId = 2,
-        LocationIds = 4,
+        LocationId = 2,
         DoctorIds = 8,
         UserId = 16
     }

@@ -15,4 +15,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.6" />
 		<PackageReference Include="LeXun.Plus.EFCore" Version="5.2.15-rc" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Thucook.Commons\Thucook.Commons.csproj" />
+	</ItemGroup>
 </Project>

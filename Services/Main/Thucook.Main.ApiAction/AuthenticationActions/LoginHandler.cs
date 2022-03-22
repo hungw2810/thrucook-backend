@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Sodium;
 using System;
 using System.Linq;
 using System.Net;
@@ -41,11 +40,19 @@ namespace Thucook.Main.ApiAction.AuthenticationActions
             {
                 return ApiResponse.CreateErrorModel(HttpStatusCode.BadRequest, ApiInternalErrorMessages.InvalidUserNameOrPassword);
             }
+
+            // Check if user is employee of location -> add claims 
+            var location = await (from l in _dbContext.Locations
+                                  join e in _dbContext.Employees on l.LocationId equals e.LocationId
+                                  where
+                                  e.UserId == user.UserId
+                                  select l).FirstOrDefaultAsync(cancellationToken);
+
             return ApiResponse.CreateModel(new UserLoginResponseModel
             {
                 AccessToken = new AccessTokenModel
                 {
-                    Token = _jwtService.GenerateJwt(user),
+                    Token = _jwtService.GenerateJwt(user, location),
                     ExpireTime = DateTime.Now.AddDays(1)
                 },
                 User = new UserResponseModel

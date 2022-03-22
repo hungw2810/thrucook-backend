@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Thucook.EntityFramework;
 
 namespace Thucook.Main.API.Middlewares
 {
@@ -25,27 +29,44 @@ namespace Thucook.Main.API.Middlewares
             _logger = logger;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, ThucookContext dbContext)
         {
+            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+            if (token != null)
+                await AttachAccountToContext(context, dbContext, token);
+
+            await _next.Invoke(context);
+        }
+
+        private static async Task AttachAccountToContext(HttpContext context, ThucookContext dbContext, string token)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build();
             try
             {
-                context.Request.EnableBuffering();
-                using (StreamReader reader = new(context.Request.Body, Encoding.UTF8, true, 1024, true))
+                var tokenHandler = new JwtSecurityTokenHandler();
+                tokenHandler.ValidateToken(token.Trim(), new TokenValidationParameters
                 {
-                    var bodyStr = await reader.ReadToEndAsync();
-                    _logger.LogInformation($"REQUEST BODY ({context.Request.ContentType}): \n{bodyStr.Trim()}");
-                }
-                _logger.LogInformation($"REQUEST HEADERS: \n{string.Join("\n", context.Request.Headers.Select(t => $"{t.Key}: { t.Value}"))}");
-                _logger.LogInformation($"REQUEST QUERIES: \n{string.Join("\n", context.Request.Query.Select(t => $"{t.Key}: { t.Value}"))}");
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["JwtSettings:SecurityKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.FromDays(1)
+                }, out SecurityToken validatedToken);
+
+                var jwtToken = (JwtSecurityToken)validatedToken;
+                var accountId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "sub").Value);
+
+                // attach account to context on successful jwt validation
+                context.Items["nameid"] = await dbContext.Users.FindAsync(accountId);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Error when reading request input");
-            }
-            finally
-            {
-                context.Request.Body.Position = 0;
-                await _next.Invoke(context);
+                // do nothing if jwt validation fails
+                // account is not attached to context so request won't have access to secure routes
             }
         }
     }

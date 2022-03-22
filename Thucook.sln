@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Main.ApiService", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thucook.Commons", "Thucook.Commons\Thucook.Commons.csproj", "{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thucook.Core", "Thucook.Core\Thucook.Core.csproj", "{0F50F0EA-7584-4644-975E-6651882F5EC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D07C72F8-0FF1-4CAC-BA1E-9468B1ADF626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F50F0EA-7584-4644-975E-6651882F5EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F50F0EA-7584-4644-975E-6651882F5EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F50F0EA-7584-4644-975E-6651882F5EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F50F0EA-7584-4644-975E-6651882F5EC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
